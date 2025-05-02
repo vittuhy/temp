@@ -22,39 +22,29 @@ async function pageFunction(context) {
     log.info("Processing station page: " + url);
 
     const name = $('.station__title').text().trim();
-
     const genreElements = $('.station__tags li');
-    const genreFields = {};
-
-    genreElements.each(function (index) {
-        const genre = $(this).text().trim();
-        genreFields[`genre${index + 1}`] = genre;
-    });
-
+        const genreFields = {};
+            genreElements.each(function (index) {
+                const genre = $(this).text().trim();
+                genreFields[`genre${index + 1}`] = genre;
+            });
     const description = $('.station__description').text().trim();
     const rating = $('.subject-rating__votes__value span').text().trim();
     const review = {
         count: parseInt($('span[itemprop="reviewCount"]').text().trim(), 10)
     };
-
     const externalLinks = [];
-
-    $('a[href]').each(function () {
-        const href = $(this).attr('href');
-        
-        // Check if it's a full URL and not on onlineradiobox.com
-        if (href && href.startsWith('http') && !href.includes('onlineradiobox.com')) {
-            externalLinks.push(href);
-        }
-    });
-
-    const website = $('a.station__reference--web[itemprop="url"]').attr('href') || 'Not found';
-
-    const facebook = $('a.i-fb--reference[title="Facebook"]').attr('href') || 'Not found';
-
-    const twitter = $('a.i-tw--reference[title="Twitter"]').attr('href') || 'Not found';
-
-    const wiki = $('a.i-wiki--reference[title="Wikipedia"]').attr('href') || 'Not found';
+        $('a[href]').each(function () {
+            const href = $(this).attr('href');
+            // Check if it's a full URL and not on onlineradiobox.com
+            if (href && href.startsWith('http') && !href.includes('onlineradiobox.com')) {
+                externalLinks.push(href);
+            }
+        });
+    const website = $('a.station__reference--web[itemprop="url"]').attr('href') || 'Website link not found.';
+    const facebook = $('a.i-fb--reference[title="Facebook"]').attr('href') || 'Facebook link not found.';
+    const twitter = $('a.i-tw--reference[title="Twitter"]').attr('href') || 'Twitter link not found.';
+    const wiki = $('a.i-wiki--reference[title="Wikipedia"]').attr('href') || 'Wikipedia link not found.';
 
     // Return data
     return {
